@@ -1,4 +1,6 @@
 # Запуск браузера
 import subprocess
+import os
 
-subprocess.run("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe")
+fileDir = os.path.dirname('__file__')
+subprocess.run(os.path.join(fileDir, "chrome.exe"))

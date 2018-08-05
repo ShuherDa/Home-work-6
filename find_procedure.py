@@ -39,40 +39,35 @@ import os
 
 migrations = 'Migrations'
 current_dir = os.path.dirname(os.path.abspath(__file__))
-way_dir = os.path.join(current_dir,migrations)
+way_dir = os.path.join(current_dir, migrations)
 
+def read_file(file_name, file_list_new):
+    with open(file_name, "r") as file:
+        file_read = file.read()
+        if find_string in file_read:
+            file_list_new.append(file_name)
+            print(file_name)
+    return file_list_new
 
+def find_procedure(file_list):
+    file_list_new = list()
+    for file in file_list:
+        file_list_new = read_file(file, file_list_new)
+    print(len(file_list_new))
+    return file_list_new
 
 if __name__ == '__main__':
-
-    def find_procedure(way,file_list):
-        file_list_new = list()
-        if len(file_list):
-            for filename in file_list:
-                with open(filename, "r") as file:
-                    file_read = file.read()
-                    if find_string in file_read:
-                        file_list_new.append(filename)
-                        print(filename)
-        else:
-            for root, dirs, files in os.walk(way):
-                for filename in files:
-                    if filename.endswith(".sql"):
-                        way_file = os.path.join(way, filename)
-                        with open(way_file, "r") as file:
-                            file_read = file.read()
-                            if find_string in file_read:
-                                file_list_new.append(way_file)
-                                print(way_file)
-        print(file_list_new.__len__())
-        return file_list_new
-
-
     file_list = list()
+    for root, dirs, files in os.walk(way_dir):
+        for filename in files:
+            if filename.endswith(".sql"):
+                way_file = os.path.join(way_dir, filename)
+                file_list.append(way_file)
+
     while True:
         print(file_list)
         find_string = input("Введите строку поиска")
-        file_list = find_procedure(way_dir, file_list)
+        file_list = find_procedure(file_list)
 
     # files = os.listdir(way)                             #способ 2 перебрать файлы
     # mytxt = filter(lambda x: x.endswith('.sql'), files)
